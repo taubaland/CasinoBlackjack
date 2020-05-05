@@ -1,12 +1,14 @@
 #include <iostream>
+#include "Headers/Deck.h"
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
 
-    for (int i = 0; i < argc; i++) 
-    {
-        cout << "Hello World" << endl;
+    Deck testDeck;
+
+    while (testDeck.remaining() != 0) {
+        cout << testDeck.draw().name() << endl;
     }
- 
     return 0;
 }
