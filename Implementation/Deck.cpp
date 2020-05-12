@@ -16,9 +16,9 @@ void Deck::generateCards() {
     }
 
     std::string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
-    std::string names[13] = {"Two", "Three", "Four",
-                             "Five", "Six", "Seven", "Eight",
-                             "Nine", "Ten", "Ace", "Jack", "Queen", "King"};
+    std::string names[13] = {"2", "3", "4",
+                             "5", "6", "7", "8",
+                             "9", "10", "A", "J", "Q", "K"};
 
     // for every suit
     for (int i = 0; i < 4; i++) {
