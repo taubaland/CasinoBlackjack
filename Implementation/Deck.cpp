@@ -9,6 +9,10 @@ int Deck::remaining() const {
 }
 
 void Deck::generateCards() {
+    while (!cards.empty()) {
+        cards.pop();
+    }
+
     std::string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
     std::string names[13] = {"Ace", "Two", "Three", "Four",
                              "Five", "Six", "Seven", "Eight",
@@ -23,6 +27,9 @@ void Deck::generateCards() {
             cards.push(newCard);
         }
     }
+
+    // Shuffle Deck
+    
 }
 
 Card Deck::draw() {
