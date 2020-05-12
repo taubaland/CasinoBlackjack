@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <time.h>
 
+using namespace std;
+
 Deck::Deck() {
     generateCards();
 }
@@ -15,8 +17,8 @@ void Deck::generateCards() {
         cards.pop_back();
     }
 
-    std::string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
-    std::string names[13] = {"2", "3", "4",
+    string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
+    string names[13] = {"2", "3", "4",
                              "5", "6", "7", "8",
                              "9", "10", "A", "J", "Q", "K"};
 
@@ -34,7 +36,7 @@ void Deck::generateCards() {
     srand(time(NULL));
     for (int i = 0; i < cards.size() - 1; i++) {
         int random = i + rand() % (cards.size() - i);
-        std::swap(cards[i], cards[random]);
+        swap(cards[i], cards[random]);
     }
 }
 

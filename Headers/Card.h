@@ -1,14 +1,15 @@
 #pragma once
 #include <string>
 
+using namespace std;
+
 class Card {
 private:
     // Private Variables
     int faceValue;
-    std::string cardName;
-    std::string cardSuit;
+    string cardName;
+    string cardSuit;
     
-
 public:
     // Constructor
     Card();
@@ -16,5 +17,5 @@ public:
 
     // Return Methods (const)
     int value() const;
-    std::string name() const;
+    string name() const;
 };

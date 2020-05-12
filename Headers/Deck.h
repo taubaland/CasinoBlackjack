@@ -3,11 +3,13 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 class Deck {
 private:
     // Private Variables
     int const static cardLimit = 52;
-    std::vector<Card> cards;
+    vector<Card> cards;
 
 public:
     // Constructor

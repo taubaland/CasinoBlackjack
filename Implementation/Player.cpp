@@ -1,6 +1,8 @@
 #include <iostream>
 #include "../Headers/Player.h"
 
+using namespace std;
+
 Player::Player(int id, Deck& deck) {
     ID = id;
     CurrentTotal = 0;

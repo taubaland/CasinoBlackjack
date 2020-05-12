@@ -1,5 +1,7 @@
 #include "../Headers/Card.h"
 
+using namespace std;
+
 Card::Card(int value, std::string name, std::string suit) {
     cardName = name;
     cardSuit = suit;
