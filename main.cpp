@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
      
     outputCards(players);
 
-    // Player Hit or Hold
+    // Game Loop
     bool gameOver = false;
     while (!gameOver) {
         if (dealer.getTotal() == 21) {
