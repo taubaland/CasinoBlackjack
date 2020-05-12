@@ -1,12 +1,12 @@
 #pragma once
 #include "Card.h"
-#include <queue>
+#include <vector>
 
 class Deck {
 private:
     // Private Variables
     int const static cardLimit = 52;
-    std::queue<Card> cards;
+    std::vector<Card> cards;
 
 public:
     // Constructor

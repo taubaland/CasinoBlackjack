@@ -1,4 +1,6 @@
 #include "../Headers/Deck.h"
+#include <algorithm>
+#include <time.h>
 
 Deck::Deck() {
     generateCards();
@@ -10,7 +12,7 @@ int Deck::remaining() const {
 
 void Deck::generateCards() {
     while (!cards.empty()) {
-        cards.pop();
+        cards.pop_back();
     }
 
     std::string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
@@ -24,16 +26,20 @@ void Deck::generateCards() {
         for (int j = 1; j <= 13; j++) {
             // create new card and enqueue
             Card newCard(j, names[j-1], suits[i]);
-            cards.push(newCard);
+            cards.push_back(newCard);
         }
     }
 
     // Shuffle Deck
-    
+    srand(time(NULL));
+    for (int i = 0; i < cards.size() - 1; i++) {
+        int random = i + rand() % (cards.size() - i);
+        std::swap(cards[i], cards[random]);
+    }
 }
 
 Card Deck::draw() {
-    Card& temp = cards.front();
-    cards.pop();
+    Card& temp = cards.back();
+    cards.pop_back();
     return temp;
 }
