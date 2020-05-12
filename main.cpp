@@ -10,5 +10,6 @@ int main(int argc, char* argv[]) {
     while (testDeck.remaining() != 0) {
         cout << testDeck.draw().name() << endl;
     }
+    
     return 0;
 }
