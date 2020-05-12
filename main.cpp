@@ -11,15 +11,15 @@ int main(int argc, char* argv[]) {
     Player p1(1, playingDeck);
     
     p1.Hit();
-    dealer.Hit();
     p1.Hit();
     cout << "Player 1 Cards:" << endl;
     p1.PrintCards();
     cout << endl;
 
+    dealer.Hit();
+    dealer.Hit();
     cout << "Dealer Cards:" << endl;
     dealer.PrintCards();
-    dealer.Hit();
 
     return 0;
 }

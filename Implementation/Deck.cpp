@@ -16,16 +16,16 @@ void Deck::generateCards() {
     }
 
     std::string suits[4] = {"Diamonds", "Hearts", "Clubs", "Spades"};
-    std::string names[13] = {"Ace", "Two", "Three", "Four",
+    std::string names[13] = {"Two", "Three", "Four",
                              "Five", "Six", "Seven", "Eight",
-                             "Nine", "Ten", "Jack", "Queen", "King"};
+                             "Nine", "Ten", "Ace", "Jack", "Queen", "King"};
 
     // for every suit
     for (int i = 0; i < 4; i++) {
         // for every card
-        for (int j = 1; j <= 13; j++) {
+        for (int j = 2; j <= 14; j++) {
             // create new card and enqueue
-            Card newCard(j, names[j-1], suits[i]);
+            Card newCard(j, names[j-2], suits[i]);
             cards.push_back(newCard);
         }
     }

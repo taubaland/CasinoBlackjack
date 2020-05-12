@@ -11,7 +11,6 @@ Player::Player(int id, Deck& deck) {
 
 void Player::Hit() {
     Card newCard = CurrentDeck->draw();
-    CurrentTotal += newCard.value();
     PlayerCards.push_back(newCard);
 }
 
@@ -20,6 +19,21 @@ void Player::Hold() {
 }
 
 int Player::getTotal() {
+    for (int i = 0; i < PlayerCards.size(); i++) {
+        Card card = PlayerCards[i];
+        if (card.value() > 11) {
+            CurrentTotal += 10;
+        } else if (card.value() == 11) {
+            if (CurrentTotal + 11 > 21) {
+                CurrentTotal += 1;
+            } else {
+                CurrentTotal += 11;
+            }
+        } else {
+            CurrentTotal += card.value();
+        }
+    }
+
     return CurrentTotal;
 }
 
