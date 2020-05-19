@@ -37,44 +37,65 @@ int main(int argc, char* argv[]) {
         if (dealer.getTotal() == 21) {
             p1.Holding = true;
         }
-        while (!p1.Holding) {
+        while (!p1.Holding && !gameOver) {
+            if (p1.getTotal() == 21) {
+                cout << "BLACKJACK! You got 21. You Win!" << endl;
+                gameOver = true;
+                break;
+            }
+            if (p1.PlayerCards.size() == 5) {
+                cout << "5 CARDS! You Hit 5 cards, House Rules... You Win!" << endl;
+                gameOver = true;
+                break;
+            }
             cout << "Would you like to HIT or HOLD?" << endl;
             string choice = "";
             bool validInput = false;
-            while (!validInput) {
+            while (!validInput && !gameOver) {
                 cin >> choice;
                 printLine();
                 if (choice == "HIT") {
+                    validInput = true;
                     p1.Hit();
+                    cout << "Player has hit... (" << p1.PlayerCards.back().name() << ")" << endl;
                     outputCards(players);
                     if (p1.getTotal() > 21) {
-                        cout << "You Busted!" << endl;
+                        cout << "You Busted! Game Over..." << endl;
                         gameOver = true;
                     }
-                    validInput = true;
                 } else if (choice == "HOLD") {
-                    p1.Holding = true;
                     validInput = true;
+                    p1.Holding = true;
                 } else {
                     cout << "Invlaid Input. Please enter either 'HIT' or 'HOLD'" << endl;
                 }
             }
         }
-        if (dealer.getTotal() > 21) {
-            cout << "You Win! Dealer has busted..." << endl;
-            outputCards(players);
-            gameOver = true;
-        } else if (dealer.getTotal() > p1.getTotal()) {
-            cout << "You Lose! Dealer has scored better:" << endl;
-            outputCards(players);
-            gameOver = true;
-        } else if (dealer.getTotal() < 17){
-            dealer.Hit();
-            cout << "Dealer has hit..." << endl;
-        } else{
-            cout << "You Win!";
-            gameOver = true;
+
+        if (!gameOver) {
+            // Once the Player Holds:
+            if (dealer.getTotal() > 21) {
+                cout << "You Win! Dealer has busted..." << endl;
+                outputCards(players);
+                gameOver = true;
+            } else if (dealer.getTotal() > p1.getTotal()) {
+                cout << "You Lose! Dealer has scored better:" << endl;
+                outputCards(players);
+                gameOver = true;
+            } else if (dealer.getTotal() == p1.getTotal()) {
+                cout << "You Drew! Both you and the dealer scored the same:" << endl;
+                outputCards(players);
+                gameOver = true;
+            } else if (dealer.getTotal() < 17) {
+                dealer.Hit();
+                cout << "Dealer has hit... (" << dealer.PlayerCards.back().name() << ")" << endl;
+            } else { 
+                cout << "You Win! Dealer has stopped Hitting at 17+..." << endl;
+                outputCards(players);
+                gameOver = true;
+            }   
         }
     }
+
     return 0;
 }

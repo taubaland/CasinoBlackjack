@@ -8,13 +8,13 @@ class Player {
 private:
     int CurrentTotal;
     Deck* CurrentDeck;
-    vector<Card> PlayerCards;
 
 public:
     // Variables
     int ID;
     bool Win;
     bool Holding;
+    vector<Card> PlayerCards;
 
     // Constructors
     Player(int id, Deck& deck);
