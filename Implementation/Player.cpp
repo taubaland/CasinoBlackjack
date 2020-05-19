@@ -62,7 +62,7 @@ void Player::PrintCards() {
     } else {
         cout << "Player " << ID << " Cards:" << endl;
     }
-
+    
     for (int i = 0; i < PlayerCards.size(); i++) {
         cout << " - " << PlayerCards[i].name() << endl;
     }

@@ -27,8 +27,6 @@ int main(int argc, char* argv[]) {
     p1.Hit();
     p1.Hit();
     dealer.Hit();
-    dealer.Hit();
-     
     outputCards(players);
 
     // Game Loop
@@ -71,6 +69,12 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
+
+
+        // Dealers Second Card
+        dealer.Hit();
+        cout << "Dealer has revealed their second card... (" << dealer.PlayerCards.back().name() << ")" << endl;
+        outputCards(players);
 
         if (!gameOver) {
             // Once the Player Holds:
