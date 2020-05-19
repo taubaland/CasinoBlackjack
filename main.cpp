@@ -64,13 +64,16 @@ int main(int argc, char* argv[]) {
             cout << "You Win! Dealer has busted..." << endl;
             outputCards(players);
             gameOver = true;
-        } else if (dealer.getTotal() >= p1.getTotal()) {
-            cout << "You Lose! Dealer has scored better or equal to player:" << endl;
+        } else if (dealer.getTotal() > p1.getTotal()) {
+            cout << "You Lose! Dealer has scored better:" << endl;
             outputCards(players);
             gameOver = true;
-        } else {
+        } else if (dealer.getTotal() < 17){
             dealer.Hit();
             cout << "Dealer has hit..." << endl;
+        } else{
+            cout << "You Win!";
+            gameOver = true;
         }
     }
     return 0;
