@@ -70,7 +70,6 @@ int main(int argc, char* argv[]) {
             }
         }
 
-
         // Dealers Second Card
         dealer.Hit();
         cout << "Dealer has revealed their second card... (" << dealer.PlayerCards.back().name() << ")" << endl;
