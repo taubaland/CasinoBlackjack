@@ -85,13 +85,13 @@ int main(int argc, char* argv[]) {
                 cout << "You Lose! Dealer has scored better:" << endl;
                 outputCards(players);
                 gameOver = true;
+            } else if (dealer.getTotal() < 17) {
+                dealer.Hit();
+                cout << "Dealer has hit... (" << dealer.PlayerCards.back().name() << ")" << endl;
             } else if (dealer.getTotal() == p1.getTotal()) {
                 cout << "You Drew! Both you and the dealer scored the same:" << endl;
                 outputCards(players);
                 gameOver = true;
-            } else if (dealer.getTotal() < 17) {
-                dealer.Hit();
-                cout << "Dealer has hit... (" << dealer.PlayerCards.back().name() << ")" << endl;
             } else { 
                 cout << "You Win! Dealer has stopped Hitting at 17+..." << endl;
                 outputCards(players);
