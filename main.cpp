@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
 
     // Game Loop
     bool gameOver = false;
+    bool dealerRevealedCard = false;
     while (!gameOver) {
         if (dealer.getTotal() == 21) {
             p1.Holding = true;
@@ -70,26 +71,28 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Dealers Second Card
-        dealer.Hit();
-        cout << "Dealer has revealed their second card... (" << dealer.PlayerCards.back().name() << ")" << endl;
-        outputCards(players);
-
         if (!gameOver) {
+            if (!dealerRevealedCard) {
+                // Dealers Second Card
+                dealer.Hit();
+                cout << "Dealer has revealed their second card... (" << dealer.PlayerCards.back().name() << ")" << endl;
+                dealerRevealedCard = true;
+            }
+
             // Once the Player Holds:
             if (dealer.getTotal() > 21) {
                 cout << "You Win! Dealer has busted..." << endl;
                 outputCards(players);
                 gameOver = true;
             } else if (dealer.getTotal() > p1.getTotal()) {
-                cout << "You Lose! Dealer has scored better:" << endl;
+                cout << "You Lose! Dealer has scored better..." << endl;
                 outputCards(players);
                 gameOver = true;
             } else if (dealer.getTotal() < 17) {
                 dealer.Hit();
                 cout << "Dealer has hit... (" << dealer.PlayerCards.back().name() << ")" << endl;
-            } else if (dealer.getTotal() == p1.getTotal() && dealer.getTotal > 16) {
-                cout << "You Drew! Both you and the dealer scored the same:" << endl;
+            } else if (dealer.getTotal() == p1.getTotal() && dealer.getTotal() >= 17) {
+                cout << "You Drew! Both you and the dealer scored the same..." << endl;
                 outputCards(players);
                 gameOver = true;
             } else { 
