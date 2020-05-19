@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
             } else if (dealer.getTotal() < 17) {
                 dealer.Hit();
                 cout << "Dealer has hit... (" << dealer.PlayerCards.back().name() << ")" << endl;
-            } else if (dealer.getTotal() == p1.getTotal()) {
+            } else if (dealer.getTotal() == p1.getTotal() && dealer.getTotal > 16) {
                 cout << "You Drew! Both you and the dealer scored the same:" << endl;
                 outputCards(players);
                 gameOver = true;
