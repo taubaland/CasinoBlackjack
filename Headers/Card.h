@@ -18,4 +18,6 @@ public:
     // Return Methods (const)
     int value() const;
     string name() const;
+    string nameString() const;
+    string suit() const;
 };

@@ -1,4 +1,5 @@
 #include <iostream>
+#include "splashkit.h"
 #include "Headers/Deck.h"
 #include "Headers/Player.h"
 
@@ -12,22 +13,28 @@ void outputCards(vector<Player*> players) {
     for (int i = 0; i < players.size(); i++) {
         players[i]->PrintCards();
         printLine();
+        refresh_screen();
     }
 }
 
 int main(int argc, char* argv[]) {
+    window a = open_window("Casino BlackJack", 800, 600);
+    while (!window_close_requested(a)) 
+    {
+        clear_screen(COLOR_GREEN);
+        draw_line(COLOR_BLACK, 0, current_window_height() / 2, current_window_width(), current_window_height() / 2);
+        refresh_screen();
+        Deck playingDeck;
+        Player dealer(0, playingDeck);
+        Player p1(1, playingDeck);
+        vector<Player*> players;
+        players.push_back(&p1);
+        players.push_back(&dealer);
 
-    Deck playingDeck;
-    Player dealer(0, playingDeck);
-    Player p1(1, playingDeck);
-    vector<Player*> players;
-    players.push_back(&p1);
-    players.push_back(&dealer);
-
-    p1.Hit();
-    p1.Hit();
-    dealer.Hit();
-    outputCards(players);
+        p1.Hit();
+        p1.Hit();
+        dealer.Hit();
+        outputCards(players);
 
     // Game Loop
     bool gameOver = false;
@@ -66,8 +73,9 @@ int main(int argc, char* argv[]) {
                     validInput = true;
                     p1.Holding = true;
                 } else {
-                    cout << "Invlaid Input. Please enter either 'HIT' or 'HOLD'" << endl;
+                    cout << "Invalid Input. Please enter either 'HIT' or 'HOLD'" << endl;
                 }
+                outputCards(players);
             }
         }
 
@@ -77,6 +85,7 @@ int main(int argc, char* argv[]) {
                 dealer.Hit();
                 cout << "Dealer has revealed their second card... (" << dealer.PlayerCards.back().name() << ")" << endl;
                 dealerRevealedCard = true;
+                outputCards(players);
             }
 
             // Once the Player Holds:
@@ -91,6 +100,7 @@ int main(int argc, char* argv[]) {
             } else if (dealer.getTotal() < 17) {
                 dealer.Hit();
                 cout << "Dealer has hit... (" << dealer.PlayerCards.back().name() << ")" << endl;
+                outputCards(players);
             } else if (dealer.getTotal() == p1.getTotal() && dealer.getTotal() >= 17) {
                 cout << "You Drew! Both you and the dealer scored the same..." << endl;
                 outputCards(players);
@@ -100,8 +110,10 @@ int main(int argc, char* argv[]) {
                 outputCards(players);
                 gameOver = true;
             }   
+            delay(1000);
+            }
         }
+        delay(1000);
     }
-
-    return 0;
+        return 0;
 }

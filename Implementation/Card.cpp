@@ -20,3 +20,11 @@ int Card::value() const {
 std::string Card::name() const {
     return cardName + " of " + cardSuit;
 }
+
+std::string Card::nameString() const {
+    return cardName;
+}
+
+std::string Card::suit() const {
+    return cardSuit;
+}

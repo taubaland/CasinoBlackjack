@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../Headers/Player.h"
+#include "splashkit.h"
 
 using namespace std;
 
@@ -65,6 +66,9 @@ void Player::PrintCards() {
     
     for (int i = 0; i < PlayerCards.size(); i++) {
         cout << " - " << PlayerCards[i].name() << endl;
+        string name = "images/" + PlayerCards[i].suit() + "/" + PlayerCards[i].nameString() + ".png";
+        load_bitmap(name, name);
+        draw_bitmap(name, i * 150 + 50, (ID) * 380 + 10);
     }
     cout << "Total: " << getTotal() << endl;
 }
