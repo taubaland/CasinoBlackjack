@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../Headers/Player.h"
-#include "splashkit.h"
+#include "../include/splashkit/splashkit.h"
+#include <cstdlib>
 
 using namespace std;
 
