@@ -119,12 +119,12 @@ int main(int argc, char* argv[]) {
                 }
 
                 // Testing ************
-                cout << "1";
+                cout << "1" << endl;
                 process_events();
 
                 if (point_in_rectangle(mouse_position(), bitmap_cell_rectangle(hit)))
                 {
-                    cout << "2";
+                    cout << "2" << endl;
                 }
                 // End Testing *************
             }
