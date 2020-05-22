@@ -98,8 +98,8 @@ int main(int argc, char* argv[]) {
             // Checks for user HIT or HOLD
             while (!gameOver && !p1.Holding) {
                 // Outputs HIT or HOLD option
-                printText(textField, "Dealer Score is " + to_string(dealer.getTotal()), -20);
-                printText(textField, "Player Score is " + to_string(p1.getTotal()), 10);
+                printText(textField, "Dealer Score: " + to_string(dealer.getTotal()), -20);
+                printText(textField, "Player Score: " + to_string(p1.getTotal()), 10);
                 printText(textField, "Would you like to HIT or HOLD?", 30);
 
                 // Checks if player got 21
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
                 while (!gameOver && !p1.Holding) {
                     // Checks for 5 card victory
                     if (p1.PlayerCards.size() == 5) {
-                        printText(textField, "5 CARDS! You Hit 5 cards, House Rules... You Win!", 10);
+                        printText(textField, "You Hit 5 cards, House Rules... You Win!", 10);
                         gameOver = true;
                         break;
                     }
@@ -127,7 +127,7 @@ int main(int argc, char* argv[]) {
                     // Needs editing:
                     if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
                         p1.Hit();
-                        printText(textField, "Player Score is " + to_string(p1.getTotal()), 10);
+                        printText(textField, "Player Score: " + to_string(p1.getTotal()), 10);
                         outputCards(players);
 
                         // Checks for Blackjack
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
                             gameOver = true;
                         }
                         if (p1.getTotal() == 21) {
-                            printText(textField, "BLACKJACK!You got 21. You Win!", 10);
+                            printText(textField, "BLACKJACK! You got 21. You Win!", 10);
                             gameOver = true;
                             break;
                         }
@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
                     }
                 }
             }
-            
+
             // Checks for NOT Gameover
             if (!gameOver) {
                 printText(textField, "Player has selected HOLD.", 30);
@@ -155,7 +155,7 @@ int main(int argc, char* argv[]) {
                 if (!dealerRevealedCard) {
                     dealer.Hit();
                     printText(textField, "Dealer Second Card: " + dealer.PlayerCards.back().name(), -40);
-                    printText(textField, "Dealer Score is " + to_string(dealer.getTotal()), -20);
+                    printText(textField, "Dealer Score: " + to_string(dealer.getTotal()), -20);
                     dealerRevealedCard = true;
                     outputCards(players);
                     delay(1700);
@@ -172,7 +172,7 @@ int main(int argc, char* argv[]) {
                     gameOver = true;
                 } else if (dealer.getTotal() < 17) {
                     dealer.Hit();
-                    printText(textField, "Dealer Score is " + to_string(dealer.getTotal()), -20);
+                    printText(textField, "Dealer Score: " + to_string(dealer.getTotal()), -20);
                     outputCards(players);
                 } else if (dealer.PlayerCards.size() == 5) {
                     printText(textField, "You Lose! Dealer has drawn 5 cards...", 10);
@@ -193,7 +193,7 @@ int main(int argc, char* argv[]) {
 
             // Restart Button
             while (!(mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), restartRect))) {
-                printText(textField, "Restart: Play Again... Exit: Leave Game...", 30);
+                printText(textField, "Restart: Play Again. Exit: Leave Game.", 30);
                 process_events();
                 if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
                         close_all_windows();
