@@ -32,7 +32,11 @@ int main(int argc, char* argv[]) {
         bitmap exit = load_bitmap("exit", "images/Buttons/exit.png");
         bitmap hit = load_bitmap("hit", "images/Buttons/hit.png");
         bitmap hold = load_bitmap("hold", "images/Buttons/hold.png");
+        bitmap blankCard = load_bitmap("blankCard", "images/back.png");
         bitmap textField = create_bitmap("textField", 400, 20);
+
+        // Draw blank card back
+        draw_bitmap(blankCard, 1 * 150 + 50, 10);
 
         // Hit and Hold Buttons
         draw_bitmap(hit, current_window_width() - bitmap_width(hit) - 10, current_window_height() / 2 + 10);
