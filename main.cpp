@@ -48,6 +48,32 @@ int main(int argc, char* argv[]) {
         // Output Text
         draw_bitmap(textField, current_window_width() / 3.0, current_window_height() / 2.0 + 10);
 
+        // Clickable Areas
+        rectangle hitRect;
+        hitRect.x = current_window_width() - bitmap_width(hit) - 10;
+        hitRect.y = current_window_height() / 2 + 10;
+        hitRect.width = 96;
+        hitRect.height = 64;
+
+        rectangle holdRect;
+        holdRect.x = current_window_width() - bitmap_width(hold) - 10;
+        holdRect.y = current_window_height() / 2 - bitmap_height(hold) - 10;
+        holdRect.width = 96;
+        holdRect.height = 64;
+
+        rectangle restartRect;
+        restartRect.x = 10;
+        restartRect.y = current_window_height() / 2 + 10;
+        restartRect.width = 96;
+        restartRect.height = 64;
+        
+        rectangle exitRect;
+        exitRect.x = 10;
+        exitRect.y = current_window_height() / 2 - bitmap_height(exit) - 10;
+        exitRect.width = 96;
+        exitRect.height = 64;
+
+
         refresh_screen();
 
         // Deck and Player/Dealer Setup
@@ -74,6 +100,7 @@ int main(int argc, char* argv[]) {
 
     while (!gameOver) {
         // Checks if player got 21
+
         if (p1.getTotal() == 21) {
                 printText(textField, "BLACKJACK!You got 21. You Win!");
                 gameOver = true;
@@ -102,9 +129,12 @@ int main(int argc, char* argv[]) {
             // Checks for Gameover
             while (!gameOver) {
                 process_events();
-
+                if (mouse_down(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
+                    close_all_windows();
+                    break;
+                }
                 // Needs editing:
-                if (mouse_down(LEFT_BUTTON) && pixel_drawn_at_point(hit, mouse_position()) ) {
+                if (mouse_down(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
                     p1.Hit();
                     printText(textField, "Player has hit.");
                     outputCards(players);
@@ -114,19 +144,23 @@ int main(int argc, char* argv[]) {
                         printText(textField, "You Busted! Game Over...");
                         gameOver = true;
                     }
-                } else if (mouse_down(LEFT_BUTTON) && pixel_drawn_at_point(hold, mouse_position())) {
+                } 
+                if (mouse_down(LEFT_BUTTON) && point_in_rectangle(mouse_position(), holdRect)) {
                     p1.Holding = true;
+                    cout << "Holding";
                 }
 
-                // Testing ************
+
+
+                /* Testing ************
                 cout << "1" << endl;
                 process_events();
 
-                if (point_in_rectangle(mouse_position(), bitmap_cell_rectangle(hit)))
+                if (point_in_rectangle(mouse_position(), hitRect))
                 {
                     cout << "2" << endl;
                 }
-                // End Testing *************
+                End Testing *************/
             }
         }
 
