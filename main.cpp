@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
                 // Needs editing:
                 if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
                     p1.Hit();
-                    printText(textField, "Player has hit.", 10);
+                    printText(textField, "Current Score is " + to_string(p1.getTotal()), 10);
                     outputCards(players);
 
                     // Checks for Blackjack
