@@ -127,14 +127,14 @@ int main(int argc, char* argv[]) {
             process_events();
 
             // Checks for Gameover
-            while (!gameOver) {
+            while (!gameOver && !p1.Holding) {
                 process_events();
-                if (mouse_down(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
+                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
                     close_all_windows();
                     break;
                 }
                 // Needs editing:
-                if (mouse_down(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
+                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
                     p1.Hit();
                     printText(textField, "Player has hit.");
                     outputCards(players);
@@ -145,22 +145,11 @@ int main(int argc, char* argv[]) {
                         gameOver = true;
                     }
                 } 
-                if (mouse_down(LEFT_BUTTON) && point_in_rectangle(mouse_position(), holdRect)) {
+                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), holdRect)) {
                     p1.Holding = true;
                     cout << "Holding";
                 }
-
-
-
-                /* Testing ************
-                cout << "1" << endl;
                 process_events();
-
-                if (point_in_rectangle(mouse_position(), hitRect))
-                {
-                    cout << "2" << endl;
-                }
-                End Testing *************/
             }
         }
 
