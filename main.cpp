@@ -28,15 +28,11 @@ int main(int argc, char* argv[]) {
         draw_line(COLOR_BLACK, 0, current_window_height() / 2, current_window_width(), current_window_height() / 2);
         
         // Bitmaps for Buttons and Output Text
-
-        // Images to be added - (ALEX)
-        bitmap restart = load_bitmap("restart", "images/restart.png");
-        bitmap exit = load_bitmap("exit", "images/exit.png");
-        // **************
-        bitmap hit = load_bitmap("hit", "images/hit.png");
-        bitmap hold = load_bitmap("hold", "images/hold.png");
+        bitmap restart = load_bitmap("restart", "images/Buttons/restart.png");
+        bitmap exit = load_bitmap("exit", "images/Buttons/exit.png");
+        bitmap hit = load_bitmap("hit", "images/Buttons/hit.png");
+        bitmap hold = load_bitmap("hold", "images/Buttons/hold.png");
         bitmap textField = create_bitmap("textField", 400, 20);
-        bitmap textFieldRestart = create_bitmap("textFieldRestart", 400, 20);
 
         // Hit and Hold Buttons
         draw_bitmap(hit, current_window_width() - bitmap_width(hit) - 10, current_window_height() / 2 + 10);
@@ -47,8 +43,7 @@ int main(int argc, char* argv[]) {
         draw_bitmap(exit, 10, current_window_height() / 2 - bitmap_height(exit) - 10);
 
         // Output Text
-        draw_bitmap(textField, current_window_width() / 3.0, current_window_height() / 2.0 + 10);
-        draw_bitmap(textFieldRestart, current_window_width() / 3.0, current_window_height() / 2.0 + 25);
+        draw_bitmap(textField, current_window_width() / 3.5, current_window_height() / 2.0 + 10);
 
         // Clickable Areas
         rectangle hitRect;
@@ -95,103 +90,116 @@ int main(int argc, char* argv[]) {
         // Output all players cards to screen
         outputCards(players);
 
-    // Game Loop
-    bool gameOver = false;
-    bool dealerRevealedCard = false;
+        // Game Loop
+        bool gameOver = false;
+        bool dealerRevealedCard = false;
 
-    while (!gameOver) {
-        // Checks if player got 21
-        if (p1.getTotal() == 21) {
-                printText(textField, "BLACKJACK!You got 21. You Win!", 10);
-                gameOver = true;
-                break;
-        }
-
-        // Checks for user HIT or HOLD
-        while (!gameOver && !p1.Holding) {
-            // Outputs HIT or HOLD option
-            printText(textField, "Would you like to HIT or HOLD?", 10);
-            printText(textFieldRestart, "", 25);
-
-            // Checks for Gameover
+        while (!gameOver) {
+            // Checks for user HIT or HOLD
             while (!gameOver && !p1.Holding) {
-                // Checks for 5 card victory
-                if (p1.PlayerCards.size() == 5) {
-                    printText(textField, "5 CARDS! You Hit 5 cards, House Rules... You Win!", 10);
+                // Outputs HIT or HOLD option
+                printText(textField, "Dealer Score is " + to_string(dealer.getTotal()), -20);
+                printText(textField, "Player Score is " + to_string(p1.getTotal()), 10);
+                printText(textField, "Would you like to HIT or HOLD?", 30);
+
+                // Checks if player got 21
+                if (p1.getTotal() == 21) {
+                    printText(textField, "BLACKJACK! You got 21... You Win!", 10);
                     gameOver = true;
                     break;
                 }
 
-                process_events();
-                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
-                    close_all_windows();
-                    break;
-                }
-
-                // Needs editing:
-                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
-                    p1.Hit();
-                    printText(textField, "Current Score is " + to_string(p1.getTotal()), 10);
-                    outputCards(players);
-
-                    // Checks for Blackjack
-                    if (p1.getTotal() > 21) {
-                        printText(textField, "You Busted! Game Over...", 10);
-                        gameOver = true;
-                    }
-                    if (p1.getTotal() == 21) {
-                        printText(textField, "BLACKJACK!You got 21. You Win!", 10);
+                // Checks for Gameover
+                while (!gameOver && !p1.Holding) {
+                    // Checks for 5 card victory
+                    if (p1.PlayerCards.size() == 5) {
+                        printText(textField, "5 CARDS! You Hit 5 cards, House Rules... You Win!", 10);
                         gameOver = true;
                         break;
                     }
-                } 
-                
-                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), holdRect)) {
-                    p1.Holding = true;
-                    cout << "Holding";
+
+                    process_events();
+                    if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
+                        close_all_windows();
+                        break;
+                    }
+
+                    // Needs editing:
+                    if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), hitRect)) {
+                        p1.Hit();
+                        printText(textField, "Player Score is " + to_string(p1.getTotal()), 10);
+                        outputCards(players);
+
+                        // Checks for Blackjack
+                        if (p1.getTotal() > 21) {
+                            printText(textField, "You Busted! Game Over...", 10);
+                            gameOver = true;
+                        }
+                        if (p1.getTotal() == 21) {
+                            printText(textField, "BLACKJACK!You got 21. You Win!", 10);
+                            gameOver = true;
+                            break;
+                        }
+                    } 
+                    
+                    if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), holdRect)) {
+                        p1.Holding = true;
+                    }
+                }
+            }
+            
+            // Checks for NOT Gameover
+            if (!gameOver) {
+                printText(textField, "Player has selected HOLD.", 30);
+                // Dealer hits their 2nd card:
+                if (!dealerRevealedCard) {
+                    dealer.Hit();
+                    printText(textField, "Dealer Second Card: " + dealer.PlayerCards.back().name(), -40);
+                    printText(textField, "Dealer Score is " + to_string(dealer.getTotal()), -20);
+                    dealerRevealedCard = true;
+                    outputCards(players);
+                    delay(1700);
+                }
+
+                // Once the Player Holds:
+                if (dealer.getTotal() > 21) {
+                    printText(textField, "You Win! Dealer has busted...", 10);
+                    outputCards(players);
+                    gameOver = true;
+                } else if (dealer.getTotal() > p1.getTotal()) {
+                    printText(textField, "You Lose! Dealer has scored better...", 10);
+                    outputCards(players);
+                    gameOver = true;
+                } else if (dealer.getTotal() < 17) {
+                    dealer.Hit();
+                    printText(textField, "Dealer Score is " + to_string(dealer.getTotal()), -20);
+                    outputCards(players);
+                } else if (dealer.PlayerCards.size() == 5) {
+                    printText(textField, "You Lose! Dealer has drawn 5 cards...", 10);
+                    gameOver = true;
+                    break;
+                } else if (dealer.getTotal() == p1.getTotal() && dealer.getTotal() >= 17) {
+                    printText(textField, "You Drew! Both you and the dealer scored the same...", 10);
+                    outputCards(players);
+                    gameOver = true;
+                } else {
+                    printText(textField, "You Win! Dealer has stopped Hitting at 17+...", 10);
+                    outputCards(players);
+                    gameOver = true;
+                }   
+                    delay(1700);
+                }
+            }
+
+            // Restart Button
+            while (!(mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), restartRect))) {
+                printText(textField, "Restart: Play Again... Exit: Leave Game...", 30);
+                process_events();
+                if (mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), exitRect)) {
+                        close_all_windows();
+                        break;
                 }
             }
         }
-
-        // Checks for NOT Gameover
-        if (!gameOver) {
-            // Dealer hits their 2nd card:
-            if (!dealerRevealedCard) {
-                dealer.Hit();
-                dealerRevealedCard = true;
-                outputCards(players);
-            }
-
-            // Once the Player Holds:
-            if (dealer.getTotal() > 21) {
-                printText(textField, "You Win! Dealer has busted...", 10);
-                outputCards(players);
-                gameOver = true;
-            } else if (dealer.getTotal() > p1.getTotal()) {
-                printText(textField, "You Lose! Dealer has scored better...", 10);
-                outputCards(players);
-                gameOver = true;
-            } else if (dealer.getTotal() < 17) {
-                dealer.Hit();
-                outputCards(players);
-            } else if (dealer.getTotal() == p1.getTotal() && dealer.getTotal() >= 17) {
-                printText(textField, "You Drew! Both you and the dealer scored the same...", 10);
-                outputCards(players);
-                gameOver = true;
-            } else {
-                printText(textField, "You Win! Dealer has stopped Hitting at 17+...", 10);
-                outputCards(players);
-                gameOver = true;
-            }   
-                delay(1000);
-            }
-        }
-
-        // Restart Button
-        while (!(mouse_clicked(LEFT_BUTTON) && point_in_rectangle(mouse_position(), restartRect))) {
-            printText(textFieldRestart, "Click Restart to play again!", 25);
-            process_events();
-        }
-    }
     return 0;
 }
