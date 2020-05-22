@@ -36,10 +36,16 @@ int main(int argc, char* argv[]) {
         bitmap hit = load_bitmap("hit", "images/hit.png");
         bitmap hold = load_bitmap("hold", "images/hold.png");
 
+        // Images to be added - (ALEX)
+        bitmap restart = load_bitmap("restart", "images/restart.png");
+        bitmap exit = load_bitmap("exit", "images/restart.png");
 
         bitmap textField = create_bitmap("textField", 400, 20);
         draw_bitmap(hit, current_window_width() - bitmap_width(hit) - 10, current_window_height() / 2 + 10);
         draw_bitmap(hold, current_window_width() - bitmap_width(hold) - 10, current_window_height() / 2 - bitmap_height(hold) - 10);
+
+        draw_bitmap(restart, 10, current_window_height() / 2 + 10);
+        draw_bitmap(exit, 10, current_window_height() / 2 - bitmap_height(exit) - 10);
 
         draw_bitmap(textField, current_window_width() / 3.0, current_window_height() / 2.0 + 10);
 
